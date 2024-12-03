@@ -1,0 +1,28 @@
+{
+  "name": "calculation",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "node esbuild.js",
+    "watch": "tsc --watch",
+    "push": "clasp push",
+    "open": "clasp open",
+    "deploy": "npm run build && npm run push",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@google/clasp": "^2.4.2",
+    "@types/google-apps-script": "^1.0.85",
+    "@types/node": "^22.9.0",
+    "clasp": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "esbuild": "^0.24.0",
+    "esbuild-gas-plugin": "^0.8.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {}
+}
