@@ -1,8 +1,52 @@
 export type RakutenUsageType = {
-  dateOfUse: string;
+  id: string;
+  date: string;
   user: string;
-  usageAmount: string;
+  amount: string;
+  whereToUse: string;
+  paymentMonth: string;
 }
+
+export type RakutenAmountType = {
+  properties: {
+    id: {
+      title: [
+        {
+          text: {
+            content: string
+          },
+        },
+      ],
+    },
+    dateOfUse: {
+      date: { start: string },
+    },
+    usageAmount: {
+      number: number,
+    },
+    user: {
+      rich_text: [
+        {
+          text: {
+            content: string
+          },
+        },
+      ]
+    },
+    whereToUse: {
+      rich_text: [
+        {
+          text: {
+            content: string
+          },
+        },
+      ]
+    },
+    paymentMonth: {
+      date: { start: string },
+    },
+  }
+};
 
 export type RakutenMonthTotalAmountType = {
   properties: {
@@ -41,7 +85,19 @@ export type CardUseType = {
     amount: {
       number: number,
     },
+    paymentMonth?: {
+      date: { start: string },
+    },
     whereToUse?: {
+      rich_text: [
+        {
+          text: {
+            content: string
+          },
+        },
+      ]
+    },
+    user?: {
       rich_text: [
         {
           text: {

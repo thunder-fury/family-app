@@ -19,12 +19,14 @@ interface NotionData {
   date: string;
   amount: number;
   whereToUse?: string;
+  user?: string;
+  paymentMonth?: string;
 }
 
 
 
 class NotionRequest<T extends NotionData> {
-  constructor(private token, private dbId, private data: T) {
+  constructor(private data: T, private token, private dbId, ) {
   }
   private properties() {
     const properties: CardUseType & { parent: {database_id: string }} = {
@@ -45,6 +47,22 @@ class NotionRequest<T extends NotionData> {
         amount: {
           number: this.data.amount,
         },
+      }
+    }
+    if (this.data.paymentMonth) {
+      properties.properties.paymentMonth= {
+        date: { start: this.data.paymentMonth.replace(/\//g, '-') },
+      }
+    }
+    if (this.data.user) {
+      properties.properties.user = {
+        rich_text: [
+          {
+            text: {
+              content: this.data.user
+            },
+          },
+        ]
       }
     }
     if (this.data.whereToUse) {

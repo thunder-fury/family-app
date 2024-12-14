@@ -13,22 +13,27 @@ const getRakutenPayUsageAllList = (body: string): RakutenUsageType[] => {
 
   lines.forEach(line => {
     if (line.includes('■利用日:')) {
-      if (currentUsage.dateOfUse && currentUsage.user && currentUsage.usageAmount) {
-        usages.push(currentUsage as RakutenUsageType);
-        currentUsage = {};
-      }
-      currentUsage.dateOfUse = line.split('■利用日:')[1]?.trim();
+      currentUsage.date = line.split('■利用日:')[1]?.trim();
+    } else if (line.includes('■利用先:')) {
+      currentUsage.whereToUse = line.split('■利用先:')[1]?.trim();
     } else if (line.includes('■利用者:')) {
       currentUsage.user = line.split('■利用者:')[1]?.trim();
     } else if (line.includes('■利用金額:')) {
-      currentUsage.usageAmount = line.split('■利用金額:')[1]?.trim();
+      currentUsage.amount = line.split('■利用金額:')[1]?.trim();
+    } else if (line.includes('■支払月:')) {
+      currentUsage.paymentMonth = line.split('■支払月:')[1]?.trim();
+    } else if (line.trim() === '') {
+      // 空行を検出したら、現在の使用情報をリストに追加し、リセット
+      if (Object.keys(currentUsage).length > 0) {
+        usages.push(currentUsage as RakutenUsageType);
+        currentUsage = {};
+      }
     }
   });
 
-  if (currentUsage.dateOfUse && currentUsage.user && currentUsage.usageAmount) {
+  if (Object.keys(currentUsage).length > 0) {
     usages.push(currentUsage as RakutenUsageType);
   }
-
   return usages;
 };
 
